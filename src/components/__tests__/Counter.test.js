@@ -7,7 +7,7 @@ let tools;
 
 beforeEach(() => {
   rtl.cleanup();
-  tools = rtl.render(<Counter user='Peter' />);
+  tools = rtl.render(<Counter user='Peter' countLimit={5}/>);
 });
 
 describe('Counter component', () => {
@@ -80,41 +80,70 @@ describe('Counter component', () => {
   it('prevents the count from going over an upper limit', () => {
     const incButton = tools.queryByTestId('incButton');
 
-    rtl.fireEvent.click(incButton);
-    expect(tools.queryByText(/0/)).not.toBeInTheDocument();
-    expect(tools.queryByText(/1/)).toBeInTheDocument();
+    // rtl.fireEvent.click(incButton);
+    // expect(tools.queryByText(/0/)).not.toBeInTheDocument();
+    // expect(tools.queryByText(/1/)).toBeInTheDocument();
 
-    rtl.fireEvent.click(incButton);
-    expect(tools.queryByText(/1/)).not.toBeInTheDocument();
-    expect(tools.queryByText(/2/)).toBeInTheDocument();
+    // rtl.fireEvent.click(incButton);
+    // expect(tools.queryByText(/1/)).not.toBeInTheDocument();
+    // expect(tools.queryByText(/2/)).toBeInTheDocument();
 
-    rtl.fireEvent.click(incButton);
-    expect(tools.queryByText(/2/)).not.toBeInTheDocument();
-    expect(tools.queryByText(/3/)).toBeInTheDocument();
+    // rtl.fireEvent.click(incButton);
+    // expect(tools.queryByText(/2/)).not.toBeInTheDocument();
+    // expect(tools.queryByText(/3/)).toBeInTheDocument();
 
-    rtl.fireEvent.click(incButton);
-    expect(tools.queryByText(/3/)).not.toBeInTheDocument();
-    expect(tools.queryByText(/4/)).toBeInTheDocument();
+    // rtl.fireEvent.click(incButton);
+    // expect(tools.queryByText(/3/)).not.toBeInTheDocument();
+    // expect(tools.queryByText(/4/)).toBeInTheDocument();
 
-    rtl.fireEvent.click(incButton);
-    expect(tools.queryByText(/4/)).not.toBeInTheDocument();
+    // rtl.fireEvent.click(incButton);
+    // expect(tools.queryByText(/4/)).not.toBeInTheDocument();
+    // expect(tools.queryByText(/5/)).toBeInTheDocument();
+
+    // rtl.fireEvent.click(incButton);
+    // expect(tools.queryByText(/5/)).toBeInTheDocument();
+
+    let counter = 0;
+    while(counter < 6) {
+      rtl.fireEvent.click(incButton);
+      counter++;
+    }
     expect(tools.queryByText(/5/)).toBeInTheDocument();
-
-    rtl.fireEvent.click(incButton);
-    expect(tools.queryByText(/5/)).toBeInTheDocument();
+    expect(tools.queryByText(/high/)).toBeInTheDocument(); 
    
   });
 
   it('prevents the count from going under a lower limit', () => {
-    // implement
+    const decButton = tools.queryByTestId('decButton');
+
+    let counter = 0;
+    while(counter > -6) {
+      rtl.fireEvent.click(decButton);
+      counter--;
+    }
+    expect(tools.queryByText(/-5/)).toBeInTheDocument();
+    expect(tools.queryByText(/low/)).toBeInTheDocument(); 
   });
 
   it('shows a warning once we hit the upper limit of the counter', () => {
-    // implement
-    // expect(tools.queryByText(/high/)).toBeInTheDocument(); 
+    const incButton = tools.queryByTestId('incButton');
+
+    let counter = 0;
+    while(counter < 6) {
+      rtl.fireEvent.click(incButton);
+      counter++;
+    }
+    expect(tools.queryByText(/high/)).toBeInTheDocument(); 
   });
 
   it('shows a warning once we hit the lower limit of the counter', () => {
-    // implement
+    const decButton = tools.queryByTestId('decButton');
+
+    let counter = 0;
+    while(counter > -6) {
+      rtl.fireEvent.click(decButton);
+      counter--;
+    }
+    expect(tools.queryByText(/low/)).toBeInTheDocument(); 
   });
 });
