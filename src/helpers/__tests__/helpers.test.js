@@ -27,6 +27,31 @@ describe('sum', () => {
 });
 
 describe('multiply', () => {
+  it('returns null if fed no arguments', () => {
+    expect(helpers.muliply()).toBe(null);
+  });
+  it('returns null if fed a single argument', () => {
+    expect(helpers.multiply(1)).toBe(null);
+  });
+  it('multiplies positive number correctly', () => {
+    expect(helpers.multiply(2, 3)).toBe(6);
+  });
+  it('multiplies negative number correctly', () => {
+    expect(helpers.multiply(-5, -5)).toBe(-25);
+  });
+  it('only multiplies integers', () => {
+    expect(helpers.multiply(2.25, 3.75)).toThrow();
+  });
+  it('throws if fed a string', () => {
+    expect(() => helpers.multiply('1', '2')).toThrow();
+  });
+  it('throws if fed a boolean', () => {
+    expect(() => helpers.multiply(true, true)).toThrow();
+  });
+  it('wont multiply three numbers', () => {
+    expect(helpers.multiply(1, 2, 3)).toBe(2);
+    expect(helpers.multiply(1, 2, 3)).not.toBe(6);
+  });
   // write tests! <================================================
 });
 
@@ -38,6 +63,19 @@ describe('personMaker', () => {
         name: 'peter',
         age: 4,
       });
+  });
+
+  it('will accept new string for name', () => {
+    expect(helpers.personMaker('Jayne', 3))
+      .toMatchObject({
+        id: '123',
+        name: 'Jayne',
+        age: 3,
+      });
+  });
+
+  it('wont accept number for name', () => {
+    expect(helpers.personMaker(2, 3)).toThrow();
   });
 
   // write more tests! <===========================================

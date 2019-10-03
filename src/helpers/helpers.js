@@ -25,6 +25,9 @@ export function multiply(a, b) {
 }
 
 export function personMaker(name, age) {
+  if (typeof name === 'number' || typeof age !== 'number') {
+    throw new Error('name should be a string, age should be a number');
+  }
   return {
     id: uuid(),
     name,
